@@ -49,6 +49,10 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+				<artifactId>wsdl4j</artifactId>
+				<groupId>wsdl4j</groupId>
+		</dependency>
 	</dependencies>
 
 	<build>

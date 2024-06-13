@@ -1,8 +1,5 @@
 package uv.mx.inventario;
 
-import java.rmi.server.UID;
-import java.util.UUID;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
@@ -14,16 +11,16 @@ import uv.mx.inventario.gen.*;
 
 @Endpoint
 public class ProductoEntPoint {
+
     @Autowired
     private IProducto newProducto;
 
-    @PayloadRoot(localPart = "AgregarProductoRequest", namespace = "inventario.mx.uv/inventario")
+    @PayloadRoot(localPart = "AgregarProductoRequest", namespace = "https://inventario.mx.uv/inventario")
     @ResponsePayload
     public AgregarProductoResponse agregarProducto(@RequestPayload AgregarProductoRequest peticion) {
         
         Producto producto = new Producto();
         AgregarProductoResponse respuesta = new AgregarProductoResponse();
-        try {
             producto.setNombre(peticion.getNombre());
             producto.setDescripcion(peticion.getDescripcion());
             producto.setPrecio(peticion.getPrecio());
@@ -34,15 +31,9 @@ public class ProductoEntPoint {
 
             return respuesta;
 
-        } catch (Exception e) {
-
-            respuesta.setMensaje("Error la guardar producto");
-            return respuesta;
-        }
-
     }
 
-    @PayloadRoot(localPart = "VerificarProductoRequest", namespace = "inventario.mx.uv/inventario")
+    @PayloadRoot(localPart = "VerificarProductoRequest", namespace = "https://inventario.mx.uv/inventario")
     @ResponsePayload
     public VerificarProductoResponse agregarProducto(@RequestPayload VerificarProductoRequest peticion) {
        
