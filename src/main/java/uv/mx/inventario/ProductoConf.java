@@ -26,12 +26,12 @@ public class ProductoConf extends WsConfigurerAdapter {
         servlet.setTransformWsdlLocations(true);
         return new ServletRegistrationBean<>(servlet, "/ws/*");
     }
-    @Bean(name="saludos")
+    @Bean(name="inventario")
     public DefaultWsdl11Definition defaultWsdl11Definition(XsdSchema inventarioSchema){
         DefaultWsdl11Definition wsdl = new DefaultWsdl11Definition();
         wsdl.setPortTypeName("inventarioPort");
         wsdl.setLocationUri("/ws");
-        wsdl.setTargetNamespace("https://t4is.uv.mx/inventario");
+        wsdl.setTargetNamespace("https://inventario.mx.uv/inventario");
         wsdl.setSchema(inventarioSchema);
         return wsdl;
     }

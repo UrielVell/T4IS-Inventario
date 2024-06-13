@@ -75,6 +75,7 @@
 					<sources>
 					<source>${project.basedir}/src/main/resources/inventario.xsd</source>
 					</sources>
+					<packageName>uv.mx.inventario.gen</packageName>
 				</configuration>
 			</plugin>
 		</plugins>

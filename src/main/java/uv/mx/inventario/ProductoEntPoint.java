@@ -3,23 +3,26 @@ package uv.mx.inventario;
 import java.rmi.server.UID;
 import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
-import uv.mx.inventario.AgregarProductoRequest;
-import uv.mx.inventario.AgregarProductoResponse;
+import uv.mx.inventario.gen.*;
+
 
 @Endpoint
 public class ProductoEntPoint {
+    @Autowired
+    private IProducto newProducto;
 
     @PayloadRoot(localPart = "AgregarProductoRequest", namespace = "inventario.mx.uv/inventario")
     @ResponsePayload
     public AgregarProductoResponse agregarProducto(@RequestPayload AgregarProductoRequest peticion) {
-        IProducto newProducto;
+        
         Producto producto = new Producto();
-        AgregarProductoResponse respuesta;
+        AgregarProductoResponse respuesta = new AgregarProductoResponse();
         try {
             producto.setNombre(peticion.getNombre());
             producto.setDescripcion(peticion.getDescripcion());
@@ -27,11 +30,14 @@ public class ProductoEntPoint {
             producto.setStock(peticion.getStock());
             producto.setTipo(peticion.getTipo());
             newProducto.save(producto);
+            respuesta.setMensaje("Producto agregado.");
 
-            return producto;
+            return respuesta;
 
         } catch (Exception e) {
-            return e;
+
+            respuesta.setMensaje("Error la guardar producto");
+            return respuesta;
         }
 
     }
@@ -39,14 +45,12 @@ public class ProductoEntPoint {
     @PayloadRoot(localPart = "VerificarProductoRequest", namespace = "inventario.mx.uv/inventario")
     @ResponsePayload
     public VerificarProductoResponse agregarProducto(@RequestPayload VerificarProductoRequest peticion) {
-        IProducto newProducto;
        
-        VerificarProductoResponse respuesta;
+        VerificarProductoResponse respuesta = new VerificarProductoResponse();
         try {
-            newProducto.findById(peticion.getId());
-            Producto producto = newProducto;
+            Producto producto = newProducto.findById(peticion.getId()).get();
             respuesta.setId(producto.getId());
-            respuesta.setnombre(producto.getNombre());
+            respuesta.setNombre(producto.getNombre());
             respuesta.setDescripcion(producto.getDescripcion());
             respuesta.setTipo(producto.getTipo());
             respuesta.setPrecio(producto.getPrecio());
